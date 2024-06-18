@@ -6,6 +6,7 @@
             </div>
         </div>
         <button v-if="winner || isDraw" @click="startNewGame">Start New Game</button>
+        <button @click="goBack">Go Back</button>
     </div>
 </template>
 
@@ -14,7 +15,7 @@ import { defineComponent, ref, watch } from 'vue';
 
 export default defineComponent({
     name: "TicTacToeBoard",
-    emits: ["winner", "gameUpdated"],
+    emits: ["winner", "gameUpdated", "goBack"],
     setup(_, { emit }) {
         const board = ref<string[]>(JSON.parse(localStorage.getItem("board") || "[]").length ? JSON.parse(localStorage.getItem("board") || "[]") : Array(9).fill(""));
         const currentPlayer = ref<"X" | "O">(localStorage.getItem("currentPlayer") as "X" | "O" || "X");
@@ -87,6 +88,11 @@ export default defineComponent({
             }
         });
 
+        const goBack = () => {
+            startNewGame();
+            emit("goBack");
+        };
+
         return {
             board,
             currentPlayer,
@@ -94,6 +100,7 @@ export default defineComponent({
             isDraw,
             makeMove,
             startNewGame,
+            goBack,
         };
     },
 });
