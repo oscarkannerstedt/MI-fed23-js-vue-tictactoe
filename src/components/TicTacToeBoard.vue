@@ -5,13 +5,15 @@
                 {{ cell }}
             </div>
         </div>
+        <p v-if="winner">{{ winnerMessage }}</p>
+        <p v-if="isDraw">It's a draw!</p>
         <button v-if="winner || isDraw" @click="startNewGame">Start New Game</button>
         <button @click="goBack">Go Back</button>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue';
+import { defineComponent, ref, watch, computed } from 'vue';
 
 export default defineComponent({
     name: "TicTacToeBoard",
@@ -74,10 +76,12 @@ export default defineComponent({
             emit("gameUpdated");
         };
 
-        const updateScores = (winner: string) => {
+        const updateScores = (result: string) => {
             const scores = JSON.parse(localStorage.getItem("scores") || "{}");
-            if (winner === "X" || winner === "O") {
-                scores[winner] = (scores[winner] || 0) +1;
+            if (result === "X" || result === "O") {
+                scores[result] = (scores[result] || 0) +1;
+            } else if (result === "Draw") {
+                scores["Draws"] = (scores["Draws"] || 0) +1;
             }
             localStorage.setItem("scores", JSON.stringify(scores));
         };
@@ -101,6 +105,14 @@ export default defineComponent({
             }
         });
 
+        const winnerMessage = computed(() => {
+            if (winner.value) {
+                const playerName = winner.value === "X" ? localStorage.getItem("playerX") :  localStorage.getItem("playerO");
+                return `${playerName} wins!`;
+            }
+            return "";
+        });
+
         return {
             board,
             currentPlayer,
@@ -109,6 +121,7 @@ export default defineComponent({
             makeMove,
             startNewGame,
             goBack,
+            winnerMessage,
         };
     },
 });
