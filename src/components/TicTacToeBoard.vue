@@ -82,16 +82,24 @@ export default defineComponent({
             localStorage.setItem("scores", JSON.stringify(scores));
         };
 
+        const clearPlayerData = () => {
+            localStorage.removeItem("playerX");
+            localStorage.removeItem("playerO");
+            localStorage.removeItem("board");
+            localStorage.removeItem("currentPlayer");
+        };
+
+        const goBack = () => {
+            startNewGame();
+            clearPlayerData();
+            emit("goBack");
+        };
+
         watch(winner, (newWinner) => {
             if (newWinner) {
                 emit("winner", newWinner);
             }
         });
-
-        const goBack = () => {
-            startNewGame();
-            emit("goBack");
-        };
 
         return {
             board,
