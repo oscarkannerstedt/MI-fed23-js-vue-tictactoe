@@ -9,23 +9,32 @@
         <p v-if="isDraw">It's a draw!</p>
         <button v-if="winner || isDraw" @click="startNewGame">Start New Game</button>
         <button @click="goBack">Go Back</button>
+        <button @click="toggleScores">{{ showScores ? 'Hide Scores' : 'Show Scores' }}</button>
+        <button v-if="showScores" @click="resetScores">Reset Scores</button>
+        <ScoreHistory v-if="showScores" />
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, watch, computed } from 'vue';
+import ScoreHistory from './ScoreHistory.vue';
 
 export default defineComponent({
     name: "TicTacToeBoard",
     emits: ["winner", "gameUpdated", "goBack"],
+    components: {
+    ScoreHistory,
+  },
     setup(_, { emit }) {
-        const board = ref<string[]>(JSON.parse(localStorage.getItem("board") || "[]").length ? JSON.parse(localStorage.getItem("board") || "[]") : Array(9).fill(""));
+        const initialBoard = Array(9).fill("");
+        const board = ref<string[]>(JSON.parse(localStorage.getItem("board") || JSON.stringify(initialBoard)));
         const currentPlayer = ref<"X" | "O">(localStorage.getItem("currentPlayer") as "X" | "O" || "X");
         const winner = ref<string | null>(null);
         const isDraw = ref(false);
+        const showScores = ref(false);
 
         const checkWinner = () => {
-            const winningsCombination = [
+            const winningCombination = [
                 [0, 1, 2],
                 [3, 4, 5],
                 [6, 7, 8],
@@ -36,15 +45,19 @@ export default defineComponent({
                 [2, 4, 6],
             ];
 
-            for (const combo of winningsCombination) {
+            for (const combo of winningCombination) {
                 const [a, b, c] = combo;
                 if(board.value[a] && board.value[a] === board.value[b] && board.value[a] === board.value[c]) {
                     return board.value[a];
                 }
             }
 
-            return board.value.every(cell => cell) ? "Draw" : null;
-        };
+            const remainingMoves = board.value.filter(cell => cell === "").length;
+                if (remainingMoves === 0) {
+            return "Draw";
+            }
+                return null;
+            };
 
         const makeMove = (index: number) => {
             if (board.value[index] === "" && !winner.value && !isDraw.value) {
@@ -53,6 +66,7 @@ export default defineComponent({
                 if (result) {
                     if (result === "Draw") {
                         isDraw.value = true;
+                        updateScores("Draw");
                     } else {
                         winner.value = result;
                         updateScores(result);
@@ -99,18 +113,29 @@ export default defineComponent({
             emit("goBack");
         };
 
+        const resetScores = () => {
+            localStorage.removeItem("scores");
+            showScores.value = false;
+        };
+
+        const toggleScores = () => {
+            showScores.value = !showScores.value;
+        };
+
+        const winnerMessage = computed(() => {
+            if (winner.value && winner.value !== "Draw") {
+                const playerName = winner.value === "X" ? localStorage.getItem("playerX") :  localStorage.getItem("playerO");
+                return `${playerName} wins!`;
+            } else if (winner.value === "Draw") {
+                return "It's a draw!";
+            }
+            return "";
+        });
+
         watch(winner, (newWinner) => {
             if (newWinner) {
                 emit("winner", newWinner);
             }
-        });
-
-        const winnerMessage = computed(() => {
-            if (winner.value) {
-                const playerName = winner.value === "X" ? localStorage.getItem("playerX") :  localStorage.getItem("playerO");
-                return `${playerName} wins!`;
-            }
-            return "";
         });
 
         return {
@@ -122,6 +147,9 @@ export default defineComponent({
             startNewGame,
             goBack,
             winnerMessage,
+            showScores,
+            toggleScores,
+            resetScores,
         };
     },
 });
