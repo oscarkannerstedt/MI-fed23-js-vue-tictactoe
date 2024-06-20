@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1>Tic Tac Toe</h1>
     <PlayerInput v-if="!playersSet" @playersSet="playersSetHandler" />
     <TicTacToeBoard v-else @winner="setWinner" @gameUpdated="gameUpdatedHandler" @goBack="playersSet = false" />
   </div>

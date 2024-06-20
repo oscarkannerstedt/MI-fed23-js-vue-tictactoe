@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h2>It's {{ getPlayerName(currentPlayer) }} turn</h2>
     <div class="board">
       <div
         v-for="(cell, index) in board"
@@ -45,6 +46,12 @@ export default defineComponent({
     const winner = ref<string | null>(null);
     const isDraw = ref(false);
     const showScores = ref(false);
+
+    const getPlayerName = (player: "X" | "O") => {
+      return player === "X"
+        ? localStorage.getItem("playerX") || "Player X"
+        : localStorage.getItem("playerO") || "Player O";
+    };
 
     const checkWinner = () => {
       const winningCombination = [
@@ -175,6 +182,7 @@ export default defineComponent({
       toggleScores,
       resetScores,
       getScores,
+      getPlayerName,
     };
   },
 });
@@ -183,18 +191,23 @@ export default defineComponent({
 <style scoped>
 .board {
   display: grid;
-  grid-template-columns: repeat(3, 100px);
+  grid-template-columns: repeat(3, 130px);
   gap: 5px;
 }
 
 .cell {
-  width: 100px;
-  height: 100px;
+  width: 130px;
+  height: 130px;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f0;
   cursor: pointer;
-  font-size: 24px;
+  font-size: 55px;
+  color: black;
+}
+
+.cell:hover {
+  background-color: #e0e0e0;
 }
 </style>
