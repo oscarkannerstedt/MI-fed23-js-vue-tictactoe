@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>It's {{ getPlayerName(currentPlayer) }} turn</h2>
+    <h2>It's {{ getPlayerName(currentPlayer) }}s turn</h2>
     <div class="board">
       <div
         v-for="(cell, index) in board"
