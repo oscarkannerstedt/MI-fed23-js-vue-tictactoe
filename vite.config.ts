@@ -3,6 +3,6 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/vue-tictactoe-oscarkannerstedt/",
+  base: "/MI-fed23-js-vue-tictactoe/",
   plugins: [vue()],
 })
