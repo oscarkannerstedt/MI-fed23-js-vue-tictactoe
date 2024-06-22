@@ -12,6 +12,7 @@ The player who succeeds in placing three of their marks in a horizontal, vertica
 ## Start the project
 
 npm i
+
 npm run dev
 
 ## Tech Stack
@@ -24,15 +25,18 @@ npm run dev
 
 ## Screenshots
 
+### Start Page
+![Start page](./screenshots/startPage.png)
 
+### Game Page
+![Start page](./screenshots/Game.png)
 
+### Show Score
+![Start page](./screenshots/Score.png)
 
+## Author
 
-
-
-
-
-
+- Oscar Kannerstedt
 
 
 # Inlämningsuppgift Tre-i-rad
