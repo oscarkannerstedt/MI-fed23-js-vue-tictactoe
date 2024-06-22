@@ -37,4 +37,8 @@ const gameUpdatedHandler = () => {
 
 <style scoped>
 
+h1 {
+  line-height: 0.2;
+}
+
 </style>

@@ -1,9 +1,15 @@
 <template>
-  <div>
+  <div class="player-input-container">
     <h2>Enter Player Names</h2>
-    <input v-model="playerX" placeholder="Player X" />
-    <input v-model="playerO" placeholder="Player O" />
+    <div class="input-wrapper">
+      <input v-model="playerX" placeholder="Player X" class="player-input" />
+    </div>
+    <div class="input-wrapper">
+    <input v-model="playerO" placeholder="Player O" class="player-input" />
+  </div>
+  <div class="button-wrapper">
     <button @click="saveNames">Start Game</button>
+  </div>
   </div>
 </template>
 
@@ -33,8 +39,23 @@ export default defineComponent({
 </script>
 
 <style scoped>
-input {
-  display: block;
-  margin: 10px 0;
+.player-input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.input-wrapper {
+  margin: 3px;
+}
+
+.player-input {
+  padding: 3px;
+  text-align: center;
+}
+
+.button-wrapper {
+  margin: 7px;
+}
+
 </style>
