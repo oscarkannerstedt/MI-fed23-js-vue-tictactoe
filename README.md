@@ -1,4 +1,40 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Xnjua3bd)
+# ASSIGNMENT - TIC TAC TOE
+
+### Course: JavaScript Advanced
+
+Visit my project: https://oscarkannerstedt.github.io/MI-fed23-js-vue-tictactoe/
+
+## Project overview
+
+Tic Tac Toe is a classic two-player game where players take turns marking spaces in a 3x3 grid with X or O.
+The player who succeeds in placing three of their marks in a horizontal, vertical or diagonal row wins the game. This project is a web-based implementation of the game built with Vue.js.
+
+## Start the project
+
+npm i
+npm run dev
+
+## Tech Stack
+
+- Vue.js
+- Vite
+- HTML/CSS
+- TypeScript
+- localStorage
+
+## Screenshots
+
+
+
+
+
+
+
+
+
+
+
+
 # Inlämningsuppgift Tre-i-rad
 
 Denna mall innehåller ett tomt vue-projekt baserat på typescript. Er uppgift är att skapa spelet tre-i-rad med hjälp av denna mall. Eftersom ni inte har någonting att utgå ifrån så har ni fria händer att skapa just er unika lösning.
